@@ -6,17 +6,36 @@ import (
 )
 
 func main() {
-	longRunningFunc()
+	testLearn()
+	testSpinner()
+	testTrace()
+}
 
+func Learn(x interface{}) {
+	switch T := x.(type) {
+	default:
+		fmt.Printf(" Data type: %T\n", T)
+	}
+}
+
+func testLearn() {
 	x := 1
 	y := true
 	Learn(x)
 	Learn(y)
 }
 
-func longRunningFunc() {
-	defer Trace("longRunningFunc()")()
-	time.Sleep(time.Duration(1) * time.Second)
+func Spinner(delay time.Duration) {
+	for {
+		for _, r := range `-\|/` {
+			fmt.Printf("\r%c", r)
+			time.Sleep(delay)
+		}
+	}
+}
+
+func testSpinner() {
+	go Spinner(100 * time.Millisecond)
 }
 
 func Trace(name string) func() {
@@ -27,9 +46,10 @@ func Trace(name string) func() {
 	}
 }
 
-func Learn(x interface{}) {
-	switch T := x.(type) {
-	default:
-		fmt.Printf(" Data type: %T\n", T)
+func testTrace() {
+	longRunningFunc := func() {
+		defer Trace("longRunningFunc()")()
+		time.Sleep(time.Duration(1) * time.Second)
 	}
+	longRunningFunc()
 }

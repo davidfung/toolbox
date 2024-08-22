@@ -1,0 +1,7 @@
+= README
+
+== TODO
+
+[ ] add comments to toolbox functions
+[ ] change it to a library
+[ ] use go test facility
